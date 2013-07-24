@@ -1,19 +1,6 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-if ( ! function_exists( 'woothemes_get_timeline_posts' ) ) {
-/**
- * Wrapper function to get the posts for the timeline from the Woothemes_Archives class.
- * @param  string/array $args  Arguments.
- * @since  1.0.0
- * @return array/boolean       Array if true, boolean if false.
- */
-function woothemes_archives_get_timeline_posts ( $args = '' ) {
-	global $woothemes_archives;
-	return $woothemes_archives->data->get_timeline_data( $args );
-} // End woothemes_archives_get_timeline_posts()
-}
-
 /**
  * Enable the usage of do_action( 'woothemes_archives_timeline' ) to display a timeline within a theme/plugin.
  *
@@ -29,7 +16,7 @@ if ( ! function_exists( 'woothemes_archives_timeline' ) ) {
  * @return string
  */
 function woothemes_archives_timeline ( $args = '' ) {
-	global $post;
+	global $post, $woothemes_archives;
 
 	$defaults = array(
 		'limit' => '-1',
@@ -57,7 +44,7 @@ function woothemes_archives_timeline ( $args = '' ) {
 	do_action( 'woothemes_archives_timeline_before', $args );
 
 		// The Query.
-		$query = woothemes_archives_get_timeline_posts( $args );
+		$query = $woothemes_archives->data->get_timeline_data( $args );
 
 		// The Display.
 		if ( ! is_wp_error( $query ) && is_array( $query ) && count( $query ) > 0 ) {

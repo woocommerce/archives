@@ -15,7 +15,8 @@
 
 require_once( 'classes/class-woothemes-archives.php' );
 require_once( 'classes/class-woothemes-archives-types.php' );
-require_once( 'woothemes-archives-template.php' );
+require_once( 'woothemes-archives-timeline.php' );
+require_once( 'woothemes-archives-sitemap.php' );
 global $woothemes_archives;
 $woothemes_archives = new Woothemes_Archives( __FILE__ );
 $woothemes_archives->version = '1.0.0';
