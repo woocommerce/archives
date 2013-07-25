@@ -42,30 +42,59 @@ function woothemes_archives_sitemap ( $args = '' ) {
 		// Post types output.
 		if ( 0 < count( $args['post_types'] ) ) {
 			foreach ( $args['post_types'] as $k => $v ) {
-				$data = get_posts( array( 'posts_per_page' => -1, 'post_type' => esc_attr( $v ) ) );
-				if ( 0 < count( $data ) ) {
-					// Retrieve data about the post type.
-					$post_type_obj = get_post_type_object( $v );
-					$html .= '<div id="sitemap-' . esc_attr( $k ) . '">' . "\n";
-					if ( isset( $post_type_obj->labels->name ) ) {
-						$html .= $args['before_title'] . $post_type_obj->labels->name . $args['after_title'] . "\n";
-					}
-					$html .= '<ul>' . "\n";
+				switch ( $v ) {
+					case 'page':
+						$html .= wp_list_pages( 'depth=0&sort_column=menu_order&title_li=&echo=0' );
+					break;
 
-					switch ( $v ) {
-						case 'page':
-							$html .= wp_list_pages( 'depth=0&sort_column=menu_order&title_li=&echo=0' );
-						break;
+					case 'product':
+						$args = array( 'posts_per_page' => -1, 'post_type' => esc_attr( $v ) );
+						$args['meta_query'] = array( array(
+										'key' => '_visibility',
+										'value' => array( 'catalog', 'visible' ),
+										'compare' => 'IN'
+									) );
 
-						default:
+						$data = get_posts( $args );
+
+						if ( 0 < count( $data ) ) {
+							// Retrieve data about the post type.
+							$post_type_obj = get_post_type_object( $v );
+							$html .= '<div id="sitemap-' . esc_attr( $k ) . '">' . "\n";
+							if ( isset( $post_type_obj->labels->name ) ) {
+								$html .= $args['before_title'] . $post_type_obj->labels->name . $args['after_title'] . "\n";
+							}
+							$html .= '<ul>' . "\n";
+
 							foreach ( $data as $i => $post ) {
 								setup_postdata( $post );
 								$html .= '<li><a href="' . esc_url( get_permalink( get_the_ID() ) ) . '">' . get_the_title() . '</a></li>' . "\n";
 							}
-						break;
-					}
 
-					$html .= '</ul>' . "\n" . '</div><!--/#sitemap-' . esc_attr( $k ) . '-->';
+							$html .= '</ul>' . "\n" . '</div><!--/#sitemap-' . esc_attr( $k ) . '-->';
+						}
+					break;
+
+					default:
+						$data = get_posts( array( 'posts_per_page' => -1, 'post_type' => esc_attr( $v ) ) );
+
+						if ( 0 < count( $data ) ) {
+							// Retrieve data about the post type.
+							$post_type_obj = get_post_type_object( $v );
+							$html .= '<div id="sitemap-' . esc_attr( $k ) . '">' . "\n";
+							if ( isset( $post_type_obj->labels->name ) ) {
+								$html .= $args['before_title'] . $post_type_obj->labels->name . $args['after_title'] . "\n";
+							}
+							$html .= '<ul>' . "\n";
+
+							foreach ( $data as $i => $post ) {
+								setup_postdata( $post );
+								$html .= '<li><a href="' . esc_url( get_permalink( get_the_ID() ) ) . '">' . get_the_title() . '</a></li>' . "\n";
+							}
+
+							$html .= '</ul>' . "\n" . '</div><!--/#sitemap-' . esc_attr( $k ) . '-->';
+						}
+					break;
 				}
 			}
 			wp_reset_postdata();
