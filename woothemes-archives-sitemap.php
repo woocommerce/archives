@@ -27,8 +27,8 @@ function woothemes_archives_sitemap ( $args = '' ) {
 		'show_posts_by_category' => true,
 		'before' => '<div class="woothemes_archives_sitemap">',
 		'after' => '</div><!--/.woothemes_archives_sitemap-->',
-		'before_title' => '<h2>',
-		'after_title' => '</h2>'
+		'before_title' => '<h3>',
+		'after_title' => '</h3>'
 	);
 
 	$args = wp_parse_args( $args, $defaults );
@@ -39,7 +39,7 @@ function woothemes_archives_sitemap ( $args = '' ) {
 
 	do_action( 'woothemes_archives_sitemap_before', $args );
 
-		// Begin output.
+		// Post types output.
 		if ( 0 < count( $args['post_types'] ) ) {
 			foreach ( $args['post_types'] as $k => $v ) {
 				$data = get_posts( array( 'posts_per_page' => -1, 'post_type' => esc_attr( $v ) ) );
@@ -48,7 +48,7 @@ function woothemes_archives_sitemap ( $args = '' ) {
 					$post_type_obj = get_post_type_object( $v );
 					$html .= '<div id="sitemap-' . esc_attr( $k ) . '">' . "\n";
 					if ( isset( $post_type_obj->labels->name ) ) {
-						$html .= '<h3>' . $post_type_obj->labels->name . '</h3>' . "\n";
+						$html .= $args['before_title'] . $post_type_obj->labels->name . $args['after_title'] . "\n";
 					}
 					$html .= '<ul>' . "\n";
 
@@ -68,6 +68,64 @@ function woothemes_archives_sitemap ( $args = '' ) {
 					$html .= '</ul>' . "\n" . '</div><!--/#sitemap-' . esc_attr( $k ) . '-->';
 				}
 			}
+			wp_reset_postdata();
+		}
+
+		// Taxonomies output.
+		if ( 0 < count( $args['taxonomies'] ) ) {
+			foreach ( $args['taxonomies'] as $k => $v ) {
+				if ( 0 < count( $data ) ) {
+					// Retrieve data about the taxonomy.
+					$tax_obj = get_taxonomy( $v );
+					$html .= '<div id="sitemap-' . esc_attr( $k ) . '">' . "\n";
+					if ( isset( $tax_obj->labels->name ) ) {
+						$html .= $args['before_title'] . $tax_obj->labels->name . $args['after_title'] . "\n";
+					}
+					$html .= '<ul>' . "\n";
+
+					switch ( $v ) {
+						default:
+							$html .= wp_list_categories( 'taxonomy=' . esc_attr( $v ) . '&title_li=&hierarchical=0&show_count=1&echo=0' );
+						break;
+					}
+
+					$html .= '</ul>' . "\n" . '</div><!--/#sitemap-' . esc_attr( $k ) . '-->';
+				}
+			}
+		}
+
+		// Show archives.
+		if ( true  == $args['show_archives'] ) {
+			$html .= '<div id="sitemap-archives">' . "\n";
+			$html .= $args['before_title'] . __( 'Archives', 'woothemes-archives' ) . $args['after_title'] . "\n";
+			$html .= '<ul>' . "\n";
+			$html .= wp_get_archives( 'type=monthly&show_post_count=1&echo=0' );
+			$html .= '</ul>' . "\n";
+			$html .= '</div><!--/#sitemap-archives-->' . "\n";
+		}
+
+		// Show posts by category.
+		if ( true  == $args['show_posts_by_category'] ) {
+			$categories = get_categories( array( 'hide_empty' => true ) );
+			$html .= '<div id="sitemap-posts-per-category">' . "\n";
+			$html .= $args['before_title'] . __( 'Recent Posts Per Category', 'woothemes-archives' ) . $args['after_title'] . "\n";
+			foreach ( $categories as $k => $v ) {
+				// Retrieve latest posts.
+				$posts = get_posts( array( 'cat' => intval( $v->cat_ID ), 'posts_per_page' => 10 ) );
+
+				$html .= '<h4>' . $v->cat_name . '</h4>' . "\n";
+				$html .= '<ul>' . "\n";
+				if ( 0 < count( $posts ) && ! is_wp_error( $posts ) ) {
+					foreach ( $posts as $i => $post ) {
+						setup_postdata( $post );
+
+						$html .= '<li><a href="' . esc_url( get_permalink( get_the_ID() ) ) . '">' . esc_html( get_the_title( get_the_ID() ) ) . '</a> - ' . __( 'Comments', 'woothemes-archives' ) . ' (' . get_comments_number( get_the_ID() ) . ')</li>' . "\n";
+					}
+					wp_reset_postdata();
+				}
+				$html .= '</ul>' . "\n";
+			}
+			$html .= '</div><!--/#sitemap-posts-per-category-->' . "\n";
 		}
 
 		// Allow child themes/plugins to filter here.
@@ -95,12 +153,15 @@ function woothemes_archives_sitemap_shortcode ( $atts, $content = null ) {
 
 	$defaults = array(
 		'limit' => '-1',
-		'orderby' => 'date',
-		'order' => 'DESC',
 		'echo' => true,
-		'size' => 50,
-		'link_title' => true,
-		'category' => 0
+		'post_types' => array( 'page', 'post' ),
+		'taxonomies' => array( 'category' ),
+		'show_archives' => true,
+		'show_posts_by_category' => true,
+		'before' => '<div class="woothemes_archives_sitemap">',
+		'after' => '</div><!--/.woothemes_archives_sitemap-->',
+		'before_title' => '<h3>',
+		'after_title' => '</h3>'
 	);
 
 	$args = shortcode_atts( $defaults, $atts );
@@ -110,11 +171,13 @@ function woothemes_archives_sitemap_shortcode ( $atts, $content = null ) {
 
 	// Fix integers.
 	if ( isset( $args['limit'] ) ) $args['limit'] = intval( $args['limit'] );
-	if ( isset( $args['size'] ) &&  ( 0 < intval( $args['size'] ) ) ) $args['size'] = intval( $args['size'] );
-	if ( isset( $args['category'] ) && is_numeric( $args['category'] ) ) $args['category'] = intval( $args['category'] );
+
+	// Fix arrays.
+	if ( isset( $args['post_types'] ) && ! is_array( $args['post_types'] ) ) $args['post_types'] = explode( ',', $args['post_types'] );
+	if ( isset( $args['taxonomies'] ) && ! is_array( $args['taxonomies'] ) ) $args['taxonomies'] = explode( ',', $args['taxonomies'] );
 
 	// Fix booleans.
-	foreach ( array( 'link_title' ) as $k => $v ) {
+	foreach ( array( 'show_archives', 'show_posts_by_category' ) as $k => $v ) {
 		if ( isset( $args[$v] ) && ( 'true' == $args[$v] ) ) {
 			$args[$v] = true;
 		} else {
