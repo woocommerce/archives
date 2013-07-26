@@ -55,12 +55,7 @@ function woothemes_archives_sitemap ( $args = '' ) {
 
 		// Show archives.
 		if ( true  == $args['show_archives'] ) {
-			$html .= '<div id="sitemap-archives">' . "\n";
-			$html .= $args['before_title'] . __( 'Archives', 'woothemes-archives' ) . $args['after_title'] . "\n";
-			$html .= '<ul>' . "\n";
-			$html .= wp_get_archives( 'type=monthly&show_post_count=1&echo=0' );
-			$html .= '</ul>' . "\n";
-			$html .= '</div><!--/#sitemap-archives-->' . "\n";
+			$html .= $woothemes_archives->sitemap->render_archives_html( $args );
 		}
 
 		// Show posts by category.

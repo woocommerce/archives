@@ -86,6 +86,7 @@ class Woothemes_Archives_Sitemap {
 	 * @access  public
 	 * @since   1.0.0
 	 * @param   string $taxonomy  The taxonomy to render HTML for.
+	 * @param   array  $args      Arguments to adjust output.
 	 * @return  string            Rendered HTML unordered list.
 	 */
 	public function render_terms_html ( $taxonomy, $args ) {
@@ -111,6 +112,24 @@ class Woothemes_Archives_Sitemap {
 
 		return $html;
 	} // End render_terms_html()
+
+	/**
+	 * Render monthly archives HTML.
+	 * @access  public
+	 * @since   1.0.0
+	 * @param   array  $args Arguments to adjust output.
+	 * @return  string Rendered HTML unordered list inside a DIV tag.
+	 */
+	public function render_archives_html ( $args ) {
+			$html = '<div id="sitemap-archives">' . "\n";
+			$html .= $args['before_title'] . __( 'Archives', 'woothemes-archives' ) . $args['after_title'] . "\n";
+			$html .= '<ul>' . "\n";
+			$html .= wp_get_archives( 'type=monthly&show_post_count=1&echo=0' );
+			$html .= '</ul>' . "\n";
+			$html .= '</div><!--/#sitemap-archives-->' . "\n";
+
+			return $html;
+	} // End render_archives_html();
 
 	/**
 	 * Check if WooCommerce is activated.
