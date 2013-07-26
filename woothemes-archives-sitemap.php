@@ -60,26 +60,7 @@ function woothemes_archives_sitemap ( $args = '' ) {
 
 		// Show posts by category.
 		if ( true  == $args['show_posts_by_category'] ) {
-			$categories = get_categories( array( 'hide_empty' => true ) );
-			$html .= '<div id="sitemap-posts-per-category">' . "\n";
-			$html .= $args['before_title'] . __( 'Recent Posts Per Category', 'woothemes-archives' ) . $args['after_title'] . "\n";
-			foreach ( $categories as $k => $v ) {
-				// Retrieve latest posts.
-				$posts = get_posts( array( 'cat' => intval( $v->cat_ID ), 'posts_per_page' => 10 ) );
-
-				$html .= '<h4>' . $v->cat_name . '</h4>' . "\n";
-				$html .= '<ul>' . "\n";
-				if ( 0 < count( $posts ) && ! is_wp_error( $posts ) ) {
-					foreach ( $posts as $i => $post ) {
-						setup_postdata( $post );
-
-						$html .= '<li><a href="' . esc_url( get_permalink( get_the_ID() ) ) . '">' . esc_html( get_the_title( get_the_ID() ) ) . '</a> - ' . __( 'Comments', 'woothemes-archives' ) . ' (' . get_comments_number( get_the_ID() ) . ')</li>' . "\n";
-					}
-					wp_reset_postdata();
-				}
-				$html .= '</ul>' . "\n";
-			}
-			$html .= '</div><!--/#sitemap-posts-per-category-->' . "\n";
+			$html .= $woothemes_archives->sitemap->render_posts_by_category_html( $args );
 		}
 
 		// Allow child themes/plugins to filter here.
