@@ -1,5 +1,18 @@
 <?php
-class Woothemes_Archives_Types {
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly.
+
+/**
+ * WooThemes Archives Timeline Class
+ *
+ * All functionality pertaining to the Timeline feature.
+ *
+ * @package WordPress
+ * @subpackage Woothemes_Archives
+ * @category Plugin
+ * @author Matty
+ * @since 1.0.0
+ */
+class Woothemes_Archives_Timeline {
 	/**
 	 * Get timeline data.
 	 * @param  string/array $args Arguments to be passed to the query.

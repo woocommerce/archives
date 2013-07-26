@@ -44,7 +44,7 @@ function woothemes_archives_timeline ( $args = '' ) {
 	do_action( 'woothemes_archives_timeline_before', $args );
 
 		// The Query.
-		$query = $woothemes_archives->data->get_timeline_data( $args );
+		$query = $woothemes_archives->timeline->get_timeline_data( $args );
 
 		// The Display.
 		if ( ! is_wp_error( $query ) && is_array( $query ) && count( $query ) > 0 ) {

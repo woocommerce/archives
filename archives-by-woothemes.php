@@ -14,7 +14,8 @@
  */
 
 require_once( 'classes/class-woothemes-archives.php' );
-require_once( 'classes/class-woothemes-archives-types.php' );
+require_once( 'classes/class-woothemes-archives-timeline.php' );
+require_once( 'classes/class-woothemes-archives-sitemap.php' );
 require_once( 'woothemes-archives-timeline.php' );
 require_once( 'woothemes-archives-sitemap.php' );
 global $woothemes_archives;

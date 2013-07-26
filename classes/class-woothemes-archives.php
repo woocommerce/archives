@@ -19,7 +19,8 @@ class Woothemes_Archives {
 	private $token;
 	public  $version;
 	private $file;
-	public  $data;
+	public  $timeline;
+	public  $sitemap;
 
 	/**
 	 * Constructor function.
@@ -38,7 +39,8 @@ class Woothemes_Archives {
 		$this->load_plugin_textdomain();
 		add_action( 'init', array( $this, 'load_localisation' ), 0 );
 
-		$this->data = new Woothemes_Archives_Types( $this->file );
+		$this->timeline = new Woothemes_Archives_Timeline( $this->file );
+		$this->sitemap = new Woothemes_Archives_Sitemap( $this->file );
 
 		// Run this on activation.
 		register_activation_hook( $this->file, array( $this, 'activation' ) );
