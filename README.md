@@ -1,4 +1,4 @@
-== Plugin Name ==
+== Archives by WooThemes ==
 Contributors: woothemes,mattyza,jeffikus
 Donate link: http://woothemes.com/
 Tags: sitemap, timeline, woothemes, shortcode
