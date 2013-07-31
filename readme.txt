@@ -24,7 +24,7 @@ Looking to contribute code to this plugin? [Fork the repository over at GitHub](
 1. Download the plugin via WordPress.org.
 2. Upload the ZIP file through the "Plugins > Add New > Upload" screen in your WordPress dashboard.
 3. Activate the plugin through the 'Plugins' menu in WordPress
-4. Place `<?php do_action( 'woothemes_archives_timeline' ); ?>` or `<?php do_action( 'woothemes_archives_sitemap' ); ?>` in your templates, or use the provided widget or shortcode.
+4. Place `<?php do_action( 'woothemes_archives_timeline' ); ?>` or `<?php do_action( 'woothemes_archives_sitemap' ); ?>` in your templates, or use the provided shortcode.
 
 == Frequently Asked Questions ==
 
