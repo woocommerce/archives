@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Archives
+ * Plugin Name: Archives by WooThemes
  * Plugin URI: http://woothemes.com/
  * Description: Hi, we're a collection of archive functions for WordPress. Use us to display archives of your content in "Timeline" or "Sitemap" format, using either a shortcode, action or template tag.
  * Author: Matty Cohen | WooThemes
