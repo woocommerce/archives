@@ -1,0 +1,4 @@
+*** Archives by WooThemes Changelog ***
+
+2013.07.31 - version 1.0.0
+ * First release. Woo!
