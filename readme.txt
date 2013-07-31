@@ -17,7 +17,7 @@ Hi, we're a collection of archive functions for WordPress. Use us to display arc
 Looking for a helping hand? [View plugin documentation](http://wordpress.org/extend/plugins/archives-by-woothemes/other_notes/).
 
 Looking to contribute code to this plugin? [Fork the repository over at GitHub](http://github.com/woothemes/archives/).
-(submit pull requests to the "develop" branch)
+(submit pull requests to the latest "release-" branch)
 
 == Installation ==
 
@@ -77,7 +77,6 @@ The various options for the "orderby" parameter are:
 `<?php do_action( 'woothemes_archives_timeline', array( 'limit' => 10, 'link_title' => false ) ); ?>`
 
 The same arguments apply to the shortcode which is `[woothemes_archives_timeline]` and the template tag, which is `<?php woothemes_archives_timeline(); ?>`.
-
 
 To display your sitemap via a theme or a custom plugin, please use the following code:
 
