@@ -52,7 +52,15 @@ class Woothemes_Archives_Sitemap {
 		$html = '';
 		switch ( $post_type ) {
 			case 'page':
+				// Retrieve data about the post type.
+				$post_type_obj = get_post_type_object( $post_type );
+				$html .= '<div id="sitemap-' . esc_attr( $post_type ) . '">' . "\n";
+				if ( isset( $post_type_obj->labels->name ) ) {
+					$html .= $args['before_title'] . $post_type_obj->labels->name . $args['after_title'] . "\n";
+				}
+				$html .= '<ul>' . "\n";
 				$html .= wp_list_pages( 'depth=0&sort_column=menu_order&title_li=&echo=0' );
+				$html .= '</ul>' . "\n" . '</div><!--/#sitemap-' . esc_attr( $post_type ) . '-->';
 			break;
 
 			default:
