@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Archives by WooThemes v1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2013-08-05 10:45:09+0000\n"
+"PO-Revision-Date: 2013-08-05 11:14:07+0000\n"
 "Last-Translator: matt <matt@woothemes.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -19,4 +19,41 @@ msgstr ""
 "X-Poedit-Bookmarks: \n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Textdomain-Support: yes"
+
+#: classes/class-woothemes-archives-sitemap.php:24
+#: classes/class-woothemes-archives-sitemap.php:50
+#@ woothemes-archives
+msgid "No post type specified. Please specify a post type token."
+msgstr ""
+
+#: classes/class-woothemes-archives-sitemap.php:102
+#@ woothemes-archives
+msgid "No taxonomy specified. Please specify a taxonomy token."
+msgstr ""
+
+#: classes/class-woothemes-archives-sitemap.php:133
+#@ woothemes-archives
+msgid "Archives"
+msgstr ""
+
+#: classes/class-woothemes-archives-sitemap.php:153
+#@ woothemes-archives
+msgid "Recent Posts Per Category"
+msgstr ""
+
+#: classes/class-woothemes-archives-sitemap.php:164
+#@ woothemes-archives
+msgid "Comments"
+msgstr ""
+
+#: woothemes-archives-timeline.php:84
+#@ woothemes-archives
+msgid "1"
+msgstr ""
+
+#: woothemes-archives-timeline.php:84
+#, php-format
+#@ woothemes-archives
+msgid "%d"
+msgstr ""
 
