@@ -1,4 +1,8 @@
 *** Archives by WooThemes Changelog ***
 
+2014.01.06 - version 1.0.1
+ * New - Adds classes to indicate whether any posts exist for each year in the Timeline
+   woothemes-archives-timeline.php
+
 2013.07.31 - version 1.0.0
  * First release. Woo!

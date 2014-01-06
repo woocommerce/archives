@@ -4,7 +4,7 @@ Donate link: http://woothemes.com/
 Tags: sitemap, timeline, woothemes, shortcode
 Requires at least: 3.4.2
 Tested up to: 3.5.2
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -139,10 +139,16 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 
 == Changelog ==
 
+= 1.0.1 =
+* Adds has-posts and no-posts classes to timeline year headings.
+
 = 1.0.0 =
 * First release. Woo!
 
 == Upgrade Notice ==
+
+= 1.0.1 =
+* Adds has-posts and no-posts classes to timeline year headings.
 
 = 1.0.0 =
 * First release. Woo!
