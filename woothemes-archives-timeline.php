@@ -112,8 +112,14 @@ function woothemes_archives_timeline ( $args = '' ) {
 					$working_year = $prev_post_year;
 					/* Print year headings until we reach the post year */
 					while ( $working_year > $post_year ) {
+						if ( $working_year - $post_year == 1 ) {
+                            $headingclass = " has-posts";
+                        }
+                        else { 
+                            $headingclass = " no-posts"; 
+                        }
 						$working_year--;
-						$html .= '<h3 class="archive_year">' . $working_year . '</h3>' . "\n";
+						$html .= '<h3 class="archive_year' . $headingclass . '">' . $working_year . '</h3>' . "\n";
 					}
 
 					/* Open a new ordered list */
